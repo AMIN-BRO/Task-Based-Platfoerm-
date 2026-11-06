@@ -1,38 +1,32 @@
 (() => {
-  // Public demo credentials are deliberately non-sensitive and only for this static demo.
-  const DEMO_EMAIL = 'demo@taskly.app';
-  const DEMO_PASSWORD = 'TasklyDemo2026!';
-  const button = document.getElementById('demoLoginButton');
-  if (!button) return;
+  'use strict';
+  // The demo and guest flows intentionally create a local demo session; no server or crypto API needed.
+  const SESSION_KEY = 'taskly.session.v1';
+  const DEMO_USER = { email: 'demo@taskly.app', name: 'Taskly Demo', guest: true };
+  const GUEST_USER = { email: 'guest', name: 'Guest', guest: true };
 
-  button.addEventListener('click', async () => {
-    const original = button.innerHTML;
-    button.disabled = true;
-    button.textContent = 'Preparing demo account…';
+  function enterDemo(user) {
     const error = document.getElementById('authError');
+    const controls = [document.getElementById('guestButton'), document.getElementById('demoLoginButton')].filter(Boolean);
     try {
-      if (!window.crypto?.subtle || !window.crypto?.randomUUID) {
-        throw new Error('Open the published HTTPS site to use demo login.');
-      }
-      const accountsKey = 'taskly.accounts.v1';
-      const accounts = JSON.parse(localStorage.getItem(accountsKey) || '{}');
-      const salt = crypto.randomUUID();
-      const encoder = new TextEncoder();
-      const key = await crypto.subtle.importKey('raw', encoder.encode(DEMO_PASSWORD), 'PBKDF2', false, ['deriveBits']);
-      const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', salt: encoder.encode(salt), iterations: 120000, hash: 'SHA-256' }, key, 256);
-      const hash = [...new Uint8Array(bits)].map(byte => byte.toString(16).padStart(2, '0')).join('');
-      // Reset this public sample account to known demo credentials on each use.
-      accounts[DEMO_EMAIL] = { name: 'Taskly Demo', salt, hash };
-      localStorage.setItem(accountsKey, JSON.stringify(accounts));
-      document.getElementById('authEmail').value = DEMO_EMAIL;
-      document.getElementById('authPassword').value = DEMO_PASSWORD;
-      document.getElementById('authName').value = 'Taskly Demo';
-      document.getElementById('authError').textContent = '';
-      document.getElementById('authForm').requestSubmit();
-    } catch (err) {
-      if (error) error.textContent = err.message || 'Could not prepare the demo login.';
-      button.innerHTML = original;
-      button.disabled = false;
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(user));
+      // A reload lets the main app initialize its own state from the session consistently.
+      window.location.reload();
+    } catch (e) {
+      if (error) error.textContent = 'Could not start the demo in this browser. Please enable site storage and reload.';
+      controls.forEach(button => { button.disabled = false; });
     }
-  });
+  }
+
+  // Capture before the app's own listeners. This keeps both entry options reliable if
+  // browser crypto is unavailable or the cached app bundle has an outdated handler.
+  document.addEventListener('click', event => {
+    const button = event.target.closest('#guestButton, #demoLoginButton');
+    if (!button) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    button.disabled = true;
+    button.textContent = button.id === 'guestButton' ? 'Opening guest workspace…' : 'Opening demo workspace…';
+    enterDemo(button.id === 'guestButton' ? GUEST_USER : DEMO_USER);
+  }, true);
 })();
