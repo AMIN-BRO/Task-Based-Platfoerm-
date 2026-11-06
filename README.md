@@ -1,33 +1,22 @@
 # Taskly — Task management, made simple
 
-A polished, responsive task dashboard for organizing your day and keeping projects moving. Built with plain HTML, CSS, and JavaScript—no build step or dependencies required.
+A responsive task dashboard for organizing your day and keeping projects moving. Built with HTML, CSS, and JavaScript; no build step required.
 
 ## Features
 
-- Overview dashboard with task totals, progress, completion, and daily focus
-- Create tasks with descriptions, projects, due dates, and priorities
-- Mark tasks complete or delete them
-- Filter by status, navigate by project, and search task details
-- Sort tasks by due date
-- Mini calendar and upcoming task agenda
-- Responsive layout with mobile navigation
-- Local browser storage, so your tasks persist between visits
+- Create, edit, complete, and delete tasks; organize with projects, due dates, and priorities.
+- Search and filter tasks, browse a navigable calendar, and see upcoming work.
+- Sign up/sign in, sign out, or continue as a guest; task lists are separated by account on the same browser.
+- Responsive dashboard with clickable navigation, task stats, notifications, and profile controls.
 
 ## Run locally
 
-Open `index.html` in a browser, or serve this folder with any static web server. For example:
+Open `index.html` in a browser or run `python -m http.server 8000` and visit `http://localhost:8000`.
 
-```bash
-python -m http.server 8000
-```
+## Important account limitation
 
-Then visit `http://localhost:8000`.
+This repository is a static GitHub Pages website and does not have a server-side authentication service. The included sign-up/sign-in is a **browser-only demo**: account records and task data live in local storage on one browser and are not synced or appropriate for sensitive information. A production login system needs a trusted authentication provider/backend (for example, Supabase or Firebase) and security rules; never treat client-only login as production authentication. For shared/multi-device accounts, configure that backend first.
 
-## Publish with GitHub Pages
+## GitHub Pages
 
-1. In the repository, open **Settings → Pages**.
-2. Under **Build and deployment**, choose **Deploy from a branch**.
-3. Select the `main` branch and `/ (root)`, then save.
-4. GitHub Pages will provide the published website URL after the first deployment.
-
-Tasks are stored in the browser's local storage and are not synced between devices or accounts.
+In repository **Settings → Pages**, choose **Deploy from a branch**, select `main` and `/ (root)`, then save. GitHub Pages will show the website URL after deployment.
