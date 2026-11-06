@@ -1,21 +1,25 @@
 # Taskly — Task management, made simple
 
-A responsive task dashboard for organizing your day and keeping projects moving. Built with HTML, CSS, and JavaScript; no build step required.
+Responsive task dashboard built with HTML, CSS, and JavaScript. No build step required.
 
 ## Features
 
-- Create, edit, complete, and delete tasks; organize with projects, due dates, and priorities.
-- Search and filter tasks, browse a navigable calendar, and see upcoming work.
-- Sign up/sign in, sign out, or continue as a guest; task lists are separated by account on the same browser.
-- Responsive dashboard with clickable navigation, task stats, notifications, and profile controls.
+- Create, edit, complete, and delete tasks; organize projects, due dates, and priorities.
+- Search and filter tasks, browse the calendar, and see upcoming work.
+- Sign up/sign in, sign out, continue as a guest, or use one-click demo login.
+- Responsive dashboard with navigation, task stats, notifications, and profile controls.
+
+## Demo credentials
+
+Use the **Try the demo account** button on the sign-in screen, or see [DEMO-LOGIN.md](DEMO-LOGIN.md) for the public demo email and password.
 
 ## Run locally
 
-Open `index.html` in a browser or run `python -m http.server 8000` and visit `http://localhost:8000`.
+Open `index.html` in a browser or run `python -m http.server 8000`, then visit `http://localhost:8000`.
 
 ## Important account limitation
 
-This repository is a static GitHub Pages website and does not have a server-side authentication service. The included sign-up/sign-in is a **browser-only demo**: account records and task data live in local storage on one browser and are not synced or appropriate for sensitive information. A production login system needs a trusted authentication provider/backend (for example, Supabase or Firebase) and security rules; never treat client-only login as production authentication. For shared/multi-device accounts, configure that backend first.
+This static demo stores credentials and tasks in browser storage and does not provide production authentication or cross-device sync. Public demo credentials are not private. A production login system needs a trusted authentication provider/backend and server-side security rules; do not use this sample for sensitive data.
 
 ## GitHub Pages
 
